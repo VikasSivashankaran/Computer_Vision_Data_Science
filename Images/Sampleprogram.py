@@ -4,7 +4,7 @@
 import cv2 
 
 # path 
-path = r'img1.png'
+path = 'img1.png'
 
 # Using cv2.imread() method 
 # Using 0 to read image in grayscale mode 
