@@ -1,32 +1,20 @@
-# Python program to capture a single image
-# using pygame library
+import cv2
 
-# importing the pygame library
-import pygame
-import pygame.camera
+# Initialize the camera (index 0 for the default camera)
+cap = cv2.VideoCapture(0)
 
-# initializing the camera
-pygame.camera.init()
-
-# make the list of all available cameras
-camlist = pygame.camera.list_cameras()
-
-print(camlist)
-# if camera is detected or not
-if camlist:
-
-	# initializing the cam variable with default camera
-	cam = pygame.camera.Camera(camlist[0], (640, 480))
-
-	# opening the camera
-	cam.start()
-
-	# capturing the single image
-	image = cam.get_image()
-
-	# saving the image
-	pygame.image.save(image, "capture.jpg")
-
-# if camera is not detected the moving to else part
+# Check if the camera opened successfully
+if not cap.isOpened():
+    print("Error: Could not open camera.")
 else:
-	print("No camera on current device")
+    # Capture a single frame
+    ret, frame = cap.read()
+    if ret:
+        # Save the captured image
+        cv2.imwrite("capture.jpg", frame)
+        print("Image saved as 'capture.jpg'")
+    else:
+        print("Error: Could not capture image.")
+
+# Release the camera
+cap.release()
